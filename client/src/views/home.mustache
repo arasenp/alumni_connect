@@ -1,0 +1,206 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Platform</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+<link rel="stylesheet" href="./css/home.css">
+<body>
+
+    <div class="content">
+        <nav>
+            <a class="navbar-brand" href="/">Alumni Connect</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h1>Welcome to Alumni Connect</h1>
+        <p>Discover extraordinary alumni events and connect with your outstanding fellow graduates.</p>
+        <button id="openModal" type="button">Log In</button>
+        <a href="/alumni-events">Explore Exceptional Events</a>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+
+            <!-- Role selection -->
+            <div class="form-group">
+                <label for="role">Select Role</label>
+                <select id="role" name="role">
+                    <option value="alumni">Alumni</option>
+                    <option value="manager">Manager</option>
+                </select>
+            </div>
+
+            <!-- Login form -->
+            <form action="/api/auth/login" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password">
+                </div>
+
+                <!-- "Don't have an account, sign up" link -->
+                <p>Don't have an account? <a href="#signupModal" id="openSignupModal" data-toggle="modal" data-dismiss="modal">Sign Up</a></p>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeLoginModal" class="btn btn-secondary">Close</button>
+                    <button type="button" id="loginButton" class="btn btn-primary">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeSignupModal">&times;</span>
+
+            <!-- Signup form -->
+            <form class="signup-form" action="/api/auth/register" method="POST">
+                <label for="signupEmail">Email</label>
+                <input type="text" id="signupEmail" name="signupEmail" placeholder="Choose an email">
+
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" name="signupPassword" placeholder="Choose a password">
+
+                <button type="button" id="signupButton">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="upcoming-events">
+        <h2>Upcoming Events</h2>
+        <ul class="list-group">
+            <!-- Sample event -->
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="descp">
+                        <h5>Annual Dinner</h5>
+                        <p>Date: 10 October 2023</p>
+                        <p>Created by: Jason</p>
+                        <p>Description: Get Together for 10 years</p>
+                    </div>
+                </div>
+            </li>
+            <!-- Repeat this structure for each event -->
+        </ul>
+    </div>
+
+    <script>
+        // JavaScript code for modal functionality
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('loginModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeLoginModal').addEventListener('click', function() {
+            document.getElementById('loginModal').style.display = 'none';
+        });
+
+        // Close modal if clicked outside the modal content
+        window.addEventListener('click', function(event) {
+            var loginModal = document.getElementById('loginModal');
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Additional JavaScript for the login button
+        document.getElementById('loginButton').addEventListener('click', function() {
+            console.log('Login button clicked');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            // Output email, password, and role to verify they are correct
+            console.log(`Email: ${email}, Password: ${password}, Role: ${role}`);
+
+            // Create an object to send to the server
+            const loginData = {
+                email: email,
+                password: password,
+                role: role
+            };
+
+            // Make an AJAX request to the server to post the form data
+            $.ajax({
+                url: '/api/auth/login', // The server route where the data should be sent
+                type: 'POST',
+                data: loginData,
+                success: function(response) {
+                    // Handle the server response (e.g., redirection)
+                    console.log('Server response:', response);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    // Handle errors here
+                }
+            });
+        });
+
+        // JavaScript code for signup modal functionality
+        document.getElementById('openSignupModal').addEventListener('click', function() {
+            // Close the login modal if it is open
+            document.getElementById('loginModal').style.display = 'none';
+
+            // Open the signup modal
+            document.getElementById('signupModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeSignupModal').addEventListener('click', function() {
+            document.getElementById('signupModal').style.display = 'none';
+        });
+
+        // Close modal if clicked outside the modal content
+        window.addEventListener('click', function(event) {
+            var signupModal = document.getElementById('signupModal');
+            if (event.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+
+        // Additional JavaScript for the signup button
+        document.getElementById('signupButton').addEventListener('click', function() {
+            // Add signup functionality here
+            console.log('Signup button clicked');
+        });
+    </script>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Email: alumniConnect@alueducation.com</p>
+                <p>Phone: +230 5987 0546</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Stay Tuned</h4>
+                <a href="#" class="social-link" target="_blank"><img src="images/facebook.png" alt="Facebook"></a>
+                <a href="#" class="social-link" target="_blank"><img src="images/twitter.png" alt="Twitter"></a>
+                <a href="#" class="social-link" target="_blank"><img src="images/instagram.png" alt="Instagram"></a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Talk to us!</h4>
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your email">
+                        <button class="subscribe-btn" type="button">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

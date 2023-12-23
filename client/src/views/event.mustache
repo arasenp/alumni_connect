@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Connect</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.3.0/mustache.min.js"></script>
+    <link rel="stylesheet" href="./css/event.css">
+</head>
+
+<body>
+
+    <div class="content">
+        <nav>
+            <a class="navbar-brand" href="/">Alumni Connect</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="welcome">
+            <h1>Welcome to Alumni Connect Events</h1>
+        </div>
+
+        <div class="event-container">
+            {{#events}}
+            <div class="event">
+                <h5>{{eventName}}</h5>
+                <p>Date: {{eventDate}}</p>
+                <p>Created by: {{eventCreator}}</p>
+                <p>Description: {{eventDescription}}</p>
+            </div>
+            {{/events}}
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Email: alumniConnect@alueducation.com</p>
+                <p>Phone: +230 5987 0546</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Stay Tuned</h4>
+                <a href="#" class="social-link" target="_blank"><img src="images/facebook.png" alt="Facebook"></a>
+                <a href="#" class="social-link" target="_blank"><img src="images/twitter.png" alt="Twitter"></a>
+                <a href="#" class="social-link" target="_blank"><img src="images/instagram.png" alt="Instagram"></a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Talk to us!</h4>
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your email">
+                        <button class="subscribe-btn" type="button">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

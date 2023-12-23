@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Connect</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+<link rel="stylesheet" href="./css/manager.css">
+</head>
+
+<body>
+
+    <div class="content">
+        <nav>
+            <a class="navbar-brand" href="/">Alumni Connect</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Alumni Data</a>
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="welcome">
+            <h1>Welcome to Alumni Connect Dashboard, {{ username }}.</h1>
+        </div>
+
+        <div class="events-container">
+            <h2>Upcoming Events</h2>
+            <div class="events-row">
+                <!-- Event Category: Professional Development -->
+                <div class="events-section">
+                    <h3>Professional Development</h3>
+                    <div class="event-category">
+                        <h5>{{ professionalDevelopmentEvent.eventName }}</h5>
+                        <p>Date: {{ professionalDevelopmentEvent.eventDate }}</p>
+                        <p>Created by: {{ professionalDevelopmentEvent.eventCreator }}</p>
+                        <p>Description: {{ professionalDevelopmentEvent.eventDescription }}</p>
+                    </div>
+                </div>
+
+                <!-- Event Category: Networking -->
+                <div class="events-section">
+                    <h3>Networking</h3>
+                    <div class="event-category">
+                        <h5>{{ networkingEvent.eventName }}</h5>
+                        <p>Date: {{ networkingEvent.eventDate }}</p>
+                        <p>Created by: {{ networkingEvent.eventCreator }}</p>
+                        <p>Description: {{ networkingEvent.eventDescription }}</p>
+                    </div>
+                </div>
+
+                <!-- Event Category: Campus Events -->
+                <div class="events-section">
+                    <h3>Campus Events</h3>
+                    <div class="event-category">
+                        <h5>{{ campusEvent.eventName }}</h5>
+                        <p>Date: {{ campusEvent.eventDate }}</p>
+                        <p>Created by: {{ campusEvent.eventCreator }}</p>
+                        <p>Description: {{ campusEvent.eventDescription }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Email: {{ contact.email }}</p>
+                <p>Phone: {{ contact.phone }}</p>
+            </div>
+            <div class="footer-column">
+                <h4>Stay Tuned</h4>
+                <a href="#" class="social-link" target="_blank"><img src="{{ socialLinks.facebook }}" alt="Facebook"></a>
+                <a href="#" class="social-link" target="_blank"><img src="{{ socialLinks.twitter }}" alt="Twitter"></a>
+                <a href="#" class="social-link" target="_blank"><img src="{{ socialLinks.instagram }}" alt="Instagram"></a>
+            </div>
+            <div class="footer-column">
+                <h4>Talk to us!</h4>
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your email">
+                        <button class="subscribe-btn" type="button">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        const addEventButton = document.querySelector('.btn-primary');
+        const modifyEventButton = document.querySelector('.btn-warning');
+        const confirmRemoveEventButton = document.querySelector('.btn-danger');
+
+        addEventButton.addEventListener('click', () => {
+            document.getElementById('addEventModal').style.display = 'block';
+        });
+
+        modifyEventButton.addEventListener('click', () => {
+            document.getElementById('modifyEventModal').style.display = 'block';
+        });
+
+        confirmRemoveEventButton.addEventListener('click', () => {
+            document.getElementById('removeEventModal').style.display = 'block';
+        });
+
+        function prepareModifyEvent(eventName) {
+            const modifyEventForm = document.getElementById('modifyEventForm');
+            const actionUrl = `/alumni/modifyEvent/${eventName}`;
+            modifyEventForm.setAttribute('action', actionUrl);
+        }
+    </script>
+</body>
+
+</html>
